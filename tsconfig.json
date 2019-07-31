@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "lib": ["es6"],
+    "moduleResolution": "node",
+    "declaration": true
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@b4dnewz/object-to-argv",
+  "version": "0.1.0",
+  "description": "Convert an object to a suitable argv array",
+  "homepage": "https://github.com/b4dnewz/object-to-argv",
+  "repository": "b4dnewz/object-to-argv",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "prebuild": "npm run test",
+    "lint": "tslint -p . --fix",
+    "test": "jest --coverage",
+    "build": "tsc"
+  },
+  "author": {
+    "name": "Filippo Conti",
+    "email": "filippo@codekraft.it",
+    "url": "https://b4dnewz.github.io/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^24.0.16",
+    "coveralls": "^3.0.5",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
