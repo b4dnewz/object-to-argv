@@ -92,3 +92,8 @@ export default function objectToArgv(data: IData, opts?: IConversionOptions): st
   return arr;
 
 }
+
+export {
+  objectToArgv,
+  IConversionOptions,
+};
