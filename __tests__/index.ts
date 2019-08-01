@@ -2,6 +2,21 @@ import objToArgv from "../src/index";
 
 describe("object to argv", () => {
 
+  it("should throw when type is not supported", () => {
+    expect(() => {
+      objToArgv({
+        // @ts-ignore
+        foo: /bar/,
+      });
+    }).toThrow(/is not supported/);
+
+    expect(objToArgv({
+      foo: ["bar", "baz"],
+    }, {
+        arraySeparator: " ",
+      })).toEqual(["--foo", "bar baz"]);
+  });
+
   it("should prefix depending on key length", () => {
     expect(objToArgv({
       b: true,
@@ -42,7 +57,6 @@ describe("object to argv", () => {
   describe("boolean", () => {
     it("should work with boolean", () => {
       expect(objToArgv({
-        bar: false,
         foo: true,
       })).toEqual(["--foo"]);
     });
@@ -51,9 +65,16 @@ describe("object to argv", () => {
       expect(objToArgv({
         bar: false,
         foo: true,
+      })).toEqual(["--no-bar", "--foo"]);
+    });
+
+    it("should disable negated boolean", () => {
+      expect(objToArgv({
+        bar: false,
+        foo: true,
       }, {
-          booleanNegation: true,
-        })).toEqual(["--no-bar", "--foo"]);
+          booleanNegation: false,
+        })).toEqual(["--foo"]);
     });
   });
 
@@ -90,15 +111,7 @@ describe("object to argv", () => {
     it("should support arrays", () => {
       expect(objToArgv({
         foo: ["bar", "baz"],
-      })).toEqual(["--foo", "bar,baz"]);
-    });
-
-    it("should support disabling array separator", () => {
-      expect(objToArgv({
-        foo: ["bar", "baz"],
-      }, {
-          arraySeparator: false,
-        })).toEqual(["--foo", "bar", "baz"]);
+      })).toEqual(["--foo", "bar", "baz"]);
     });
 
     it("should support custom array separator", () => {
@@ -107,21 +120,6 @@ describe("object to argv", () => {
       }, {
           arraySeparator: ";",
         })).toEqual(["--foo", "bar;baz"]);
-    });
-
-    it("should throw when type is not supported", () => {
-      expect(() => {
-        objToArgv({
-          // @ts-ignore
-          foo: /bar/,
-        });
-      }).toThrow(/is not supported/);
-
-      expect(objToArgv({
-        foo: ["bar", "baz"],
-      }, {
-          arraySeparator: " ",
-        })).toEqual(["--foo", "bar baz"]);
     });
   });
 

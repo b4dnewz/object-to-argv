@@ -4,8 +4,8 @@ interface IData {
   [flag: string]: InputValues;
 }
 
-interface IOptions {
-  arraySeparator?: string | boolean;
+interface IConversionOptions {
+  arraySeparator?: string;
   booleanNegation?: boolean;
   normalize?: boolean;
 }
@@ -16,7 +16,7 @@ function normalizeKey(input: string) {
     .toLowerCase();
 }
 
-function prepareKey(input: string, value: InputValues, opts: IOptions) {
+function prepareKey(input: string, value: InputValues, opts: IConversionOptions) {
   let prefix = "";
 
   if (input.length === 1) {
@@ -39,11 +39,10 @@ function prepareKey(input: string, value: InputValues, opts: IOptions) {
 /**
  * Converts an object to a suitable argv array
  */
-export default function objToArgv(data: IData, opts?: IOptions): string[] {
+export default function objectToArgv(data: IData, opts?: IConversionOptions): string[] {
 
   opts = {
-    arraySeparator: ",",
-    booleanNegation: false,
+    booleanNegation: true,
     normalize: true,
     ...opts,
   };
@@ -74,16 +73,14 @@ export default function objToArgv(data: IData, opts?: IOptions): string[] {
             o[`${arg}.${k}`] = val[k];
             return o;
           }, {});
-          arr.push(...objToArgv(obj, opts));
+          arr.push(...objectToArgv(obj, opts));
           break;
         }
         if (val.constructor === Array) {
-          if (typeof opts.arraySeparator === "boolean") {
-            if (opts.arraySeparator === false) {
-              arr.push(key, ...val);
-            }
-          } else {
+          if (opts.arraySeparator) {
             arr.push(key, val.join(opts.arraySeparator));
+          } else {
+            arr.push(key, ...val);
           }
           break;
         }
