@@ -19,6 +19,13 @@
     "url": "https://b4dnewz.github.io/"
   },
   "license": "MIT",
+  "keywords": [
+    "argv",
+    "converter",
+    "conversion",
+    "object-conversion",
+    "cli-utility"
+  ],
   "devDependencies": {
     "@types/jest": "^24.0.16",
     "coveralls": "^3.0.5",
