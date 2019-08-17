@@ -6,6 +6,9 @@
   "repository": "b4dnewz/object-to-argv",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "prepublishOnly": "npm run build",
     "prebuild": "npm run test",
