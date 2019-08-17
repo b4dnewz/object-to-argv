@@ -1,7 +1,7 @@
-type InputValues = number | string | boolean | any | string[];
+type InputValues = number | string | boolean | IArgObject | string[];
 
-interface IData {
-  [flag: string]: InputValues;
+interface IArgObject {
+  [arg: string]: InputValues;
 }
 
 interface IConversionOptions {
@@ -39,7 +39,7 @@ function prepareKey(input: string, value: InputValues, opts: IConversionOptions)
 /**
  * Converts an object to a suitable argv array
  */
-export default function objectToArgv(data: IData, opts?: IConversionOptions): string[] {
+export default function objectToArgv(data: IArgObject, opts?: IConversionOptions): string[] {
 
   opts = {
     booleanNegation: true,
@@ -78,9 +78,9 @@ export default function objectToArgv(data: IData, opts?: IConversionOptions): st
         }
         if (val.constructor === Array) {
           if (opts.arraySeparator) {
-            arr.push(key, val.join(opts.arraySeparator));
+            arr.push(key, (val as string[]).join(opts.arraySeparator));
           } else {
-            arr.push(key, ...val);
+            arr.push(key, ...val as string[]);
           }
           break;
         }
