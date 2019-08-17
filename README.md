@@ -25,6 +25,17 @@ objectToArgv({
 // ["-c", "--no-baz", "--foo", "bar", "--arr", "a", "b"]
 ```
 
+You can also add positional arguments setting the value to `null`
+
+```js
+objectToArgv({
+  foo: null,
+  bar: true
+})
+
+// ["foo", "--bar"]
+```
+
 ## Options
 
 Here a list of options that can be used when converting objects to argv array, simply pass them as second argument to the conversion function.

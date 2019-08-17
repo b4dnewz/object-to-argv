@@ -1,4 +1,4 @@
-type InputValues = number | string | boolean | IArgObject | string[];
+type InputValues = null | number | string | boolean | IArgObject | string[];
 
 interface IArgObject {
   [arg: string]: InputValues;
@@ -56,6 +56,11 @@ export default function objectToArgv(data: IArgObject, opts?: IConversionOptions
 
     const val = data[arg];
     const key = prepareKey(arg, val, opts);
+
+    if (val === null) {
+      arr.push(arg);
+      continue;
+    }
 
     switch (typeof val) {
       case "number":

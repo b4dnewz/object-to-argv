@@ -2,6 +2,13 @@ import objToArgv from "../src/index";
 
 describe("object to argv", () => {
 
+  it("should parse null as positional argument", () => {
+    expect(objToArgv({
+      bar: null,
+      baz: null,
+    })).toEqual(["bar", "baz"]);
+  });
+
   it("should throw when type is not supported", () => {
     expect(() => {
       objToArgv({
